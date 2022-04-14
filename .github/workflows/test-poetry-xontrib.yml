@@ -5,6 +5,7 @@ on:
     inputs:
       xontrib_name:
         required: true
+        type: string
 jobs:
   testing:
     strategy:
