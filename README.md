@@ -1,2 +1,3 @@
-# actions
-Common Github CI workflows
+# xonsh/actions
+
+Github CI workflows for the xonsh shell projects.
