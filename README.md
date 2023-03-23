@@ -2,7 +2,7 @@
 
 Github CI workflows for the xonsh shell projects.
 
-## Usage example
+## Usage
 
 Example from [xontrib-abbrevs/.github/workflows/test.yml](https://github.com/xonsh/xontrib-abbrevs/blob/5fbd8bfaf7cab2ebda05bb8294e6fc14e65f29e5/.github/workflows/test.yml):
 
