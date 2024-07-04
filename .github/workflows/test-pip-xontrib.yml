@@ -3,9 +3,10 @@ name: Testing
 on:
   workflow_call:
     # inputs:
-    #   xontrib_name:
-    #     required: true
-    #     type: string
+#     #   xontrib_name:
+#     #     required: true
+#     #     type: string
+
 jobs:
   testing:
     strategy:
