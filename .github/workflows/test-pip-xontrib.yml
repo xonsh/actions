@@ -2,10 +2,13 @@ name: Testing
 
 on:
   workflow_call:
-    # inputs:
-#     #   xontrib_name:
-#     #     required: true
-#     #     type: string
+    inputs:
+      xontrib_name:
+        required: false
+        type: string
+      cache-dependency-path:
+        required: false
+        type: string
 
 jobs:
   testing:
