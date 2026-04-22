@@ -1,0 +1,83 @@
+name: 'Setup xonsh'
+description: 'Install xonsh on the runner. Use with `shell: xonsh {0}` in later steps.'
+author: 'xonsh'
+branding:
+  icon: 'terminal'
+  color: 'blue'
+
+inputs:
+  xonsh-version:
+    description: 'xonsh version (PyPI specifier, e.g. "0.23.1" or ">=0.23.1"). Empty installs the latest.'
+    required: false
+    default: ''
+  python-version:
+    description: 'If set, runs actions/setup-python@v5 with this version before installing xonsh. Leave empty to use the Python already on PATH.'
+    required: false
+    default: ''
+  extras:
+    description: 'xonsh pip extras, e.g. "full". Installs as xonsh[<extras>].'
+    required: false
+    default: ''
+  xontribs:
+    description: 'Space-separated list of extra pip packages (xontribs, etc.) to install after xonsh.'
+    required: false
+    default: ''
+
+outputs:
+  xonsh-version:
+    description: 'The installed xonsh version.'
+    value: ${{ steps.install.outputs.xonsh-version }}
+  xonsh-path:
+    description: 'Absolute path to the xonsh executable.'
+    value: ${{ steps.install.outputs.xonsh-path }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      if: inputs.python-version != ''
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install xonsh
+      id: install
+      shell: bash
+      env:
+        SETUP_XONSH_VERSION: ${{ inputs.xonsh-version }}
+        SETUP_XONSH_EXTRAS: ${{ inputs.extras }}
+        SETUP_XONSH_XONTRIBS: ${{ inputs.xontribs }}
+      run: |
+        set -eu
+        PY=python
+        if ! command -v "$PY" >/dev/null 2>&1; then
+          PY=python3
+        fi
+        pkg="xonsh"
+        if [ -n "${SETUP_XONSH_EXTRAS}" ]; then
+          pkg="xonsh[${SETUP_XONSH_EXTRAS}]"
+        fi
+        if [ -n "${SETUP_XONSH_VERSION}" ]; then
+          case "${SETUP_XONSH_VERSION}" in
+            ==*|>=*|<=*|~=*|!=*|>*|<*) spec="${pkg}${SETUP_XONSH_VERSION}" ;;
+            *)                           spec="${pkg}==${SETUP_XONSH_VERSION}" ;;
+          esac
+        else
+          spec="${pkg}"
+        fi
+        "$PY" -m pip install --upgrade pip
+        "$PY" -m pip install "${spec}"
+        if [ -n "${SETUP_XONSH_XONTRIBS}" ]; then
+          "$PY" -m pip install ${SETUP_XONSH_XONTRIBS}
+        fi
+        installed=$("$PY" -c "import xonsh; print(xonsh.__version__)")
+        xonsh_path=$("$PY" -c "import shutil, sys; sys.stdout.write(shutil.which('xonsh') or '')")
+        echo "xonsh-version=${installed}" >> "${GITHUB_OUTPUT}"
+        echo "xonsh-path=${xonsh_path}" >> "${GITHUB_OUTPUT}"
+        echo "::notice title=setup-xonsh::Installed xonsh ${installed} at ${xonsh_path}"
+
+    - name: Verify xonsh
+      shell: 'xonsh {0}'
+      run: |
+        import sys, xonsh
+        print(f"setup-xonsh: xonsh {xonsh.__version__} on Python {sys.version.split()[0]}")

@@ -1,0 +1,88 @@
+name: Test setup-xonsh
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'setup-xonsh/**'
+      - '.github/workflows/test-setup-xonsh.yml'
+  pull_request:
+    paths:
+      - 'setup-xonsh/**'
+      - '.github/workflows/test-setup-xonsh.yml'
+  workflow_dispatch:
+
+jobs:
+  basic:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./setup-xonsh
+        id: xonsh
+
+      - name: Check outputs
+        shell: bash
+        run: |
+          echo "xonsh-version=${{ steps.xonsh.outputs.xonsh-version }}"
+          echo "xonsh-path=${{ steps.xonsh.outputs.xonsh-path }}"
+          test -n "${{ steps.xonsh.outputs.xonsh-version }}"
+          test -n "${{ steps.xonsh.outputs.xonsh-path }}"
+
+      - name: Run xonsh (per-step shell)
+        shell: 'xonsh {0}'
+        run: |
+          print("hello from xonsh")
+          $PATH.append('/mypath')
+          assert '/mypath' in $PATH
+          print("PATH append works")
+
+  with-python-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./setup-xonsh
+        with:
+          python-version: '3.13'
+      - shell: 'xonsh {0}'
+        run: |
+          import sys
+          print(sys.version)
+          assert sys.version_info[:2] == (3, 13), f"expected 3.13, got {sys.version_info[:2]}"
+
+  with-extras-and-xontrib:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./setup-xonsh
+        with:
+          extras: 'ptk'
+          xontribs: 'xontrib-abbrevs'
+      - shell: 'xonsh {0}'
+        run: |
+          import importlib
+          importlib.import_module('prompt_toolkit')
+          importlib.import_module('xontrib.abbrevs')
+          print("extras + xontrib import OK")
+
+  job-default-shell:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: 'xonsh {0}'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install xonsh
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install xonsh
+      # Once xonsh is on PATH, every later `run:` uses it as the default shell.
+      - run: |
+          print("default shell is xonsh")
+          $MSG = 'xonsh-rocks'
+          print($MSG)
