@@ -1,9 +1,9 @@
-name: 'Setup xonsh'
-description: 'Install xonsh on the runner. Use with `shell: xonsh {0}` in later steps.'
+name: 'Setup xonsh shell'
+description: 'Install xonsh shell on the runner. Use with `shell: xonsh {0}` in later steps.'
 author: 'xonsh'
 branding:
-  icon: 'terminal'
-  color: 'blue'
+  icon: 'at-sign'
+  color: 'green'
 
 inputs:
   xonsh-version:
