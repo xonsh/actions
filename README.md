@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions@main
+      - uses: xonsh/actions@v1
 
       - name: Run xonsh
         shell: xonsh {0}
@@ -42,7 +42,7 @@ jobs:
         shell: xonsh {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions@main
+      - uses: xonsh/actions@v1
 
       - run: |
           echo "hello from xonsh"
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: xonsh
-        uses: xonsh/actions@main
+        uses: xonsh/actions@v1
         with:
           python-version: '3.13'         # actions/setup-python before install
           xonsh-version: '0.23.1'        # pinned PyPI version
@@ -117,7 +117,7 @@ jobs:
         shell: xonsh {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions@main
+      - uses: xonsh/actions@v1
 
       - run: |
           $PATH.append('/mypath')
@@ -141,7 +141,7 @@ on:
 jobs:
   testing:
     # reuse workflow definitions
-    uses: xonsh/actions/.github/workflows/test-pip-xontrib.yml@main
+    uses: xonsh/actions/.github/workflows/test-pip-xontrib.yml@v1
     with:
       cache-dependency-path: pyproject.toml
 ```
@@ -153,7 +153,7 @@ Same matrix, but uses Poetry for dependency management. Pass the `xontrib_name` 
 ```yaml
 jobs:
   testing:
-    uses: xonsh/actions/.github/workflows/test-poetry-xontrib.yml@main
+    uses: xonsh/actions/.github/workflows/test-poetry-xontrib.yml@v1
     with:
       xontrib_name: my_xontrib
 ```
