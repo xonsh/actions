@@ -1,4 +1,4 @@
-name: Testing
+name: ci-poetry-xontrib
 
 on:
   workflow_call:

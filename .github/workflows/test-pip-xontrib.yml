@@ -1,4 +1,4 @@
-name: Testing
+name: ci-test-pip-xontrib
 
 on:
   workflow_call:

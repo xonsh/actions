@@ -1,4 +1,4 @@
-name: Test setup-xonsh
+name: ci-test-setup-xonsh
 
 on:
   push:

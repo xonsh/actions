@@ -2,7 +2,7 @@
 
 GitHub Actions for the [xonsh](https://xon.sh) shell.
 
-## `setup-xonsh`
+## `xonsh/actions/setup-xonsh`
 
 Composite action that installs xonsh on the runner. Subsequent steps run as xonsh by setting either `shell: xonsh {0}` on a single step 
 or `defaults.run.shell: xonsh {0}` on the whole job.
