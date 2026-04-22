@@ -58,10 +58,11 @@ runs:
           pkg="xonsh[${SETUP_XONSH_EXTRAS}]"
         fi
         if [ -n "${SETUP_XONSH_VERSION}" ]; then
-          case "${SETUP_XONSH_VERSION}" in
-            ==*|>=*|<=*|~=*|!=*|>*|<*) spec="${pkg}${SETUP_XONSH_VERSION}" ;;
-            *)                           spec="${pkg}==${SETUP_XONSH_VERSION}" ;;
-          esac
+          if printf '%s' "${SETUP_XONSH_VERSION}" | grep -Eq '^(==|>=|<=|~=|!=|>|<)'; then
+            spec="${pkg}${SETUP_XONSH_VERSION}"
+          else
+            spec="${pkg}==${SETUP_XONSH_VERSION}"
+          fi
         else
           spec="${pkg}"
         fi
