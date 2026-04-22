@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'setup-xonsh/**'
+      - 'action.yml'
       - '.github/workflows/test-setup-xonsh.yml'
   pull_request:
     paths:
-      - 'setup-xonsh/**'
+      - 'action.yml'
       - '.github/workflows/test-setup-xonsh.yml'
   workflow_dispatch:
 
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./setup-xonsh
+      - uses: ./
         id: xonsh
 
       - name: Check outputs
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./setup-xonsh
+      - uses: ./
         with:
           python-version: '3.13'
       - shell: 'xonsh {0}'
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./setup-xonsh
+      - uses: ./
         with:
           extras: 'ptk'
           xontribs: 'xontrib-abbrevs'

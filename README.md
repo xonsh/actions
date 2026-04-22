@@ -2,7 +2,7 @@
 
 GitHub Actions for the [xonsh](https://xon.sh) shell.
 
-## `xonsh/actions/setup-xonsh`
+## `xonsh/actions` — setup-xonsh
 
 Composite action that installs xonsh on the runner. Subsequent steps run as xonsh by setting either `shell: xonsh {0}` on a single step 
 or `defaults.run.shell: xonsh {0}` on the whole job.
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions/setup-xonsh@main
+      - uses: xonsh/actions@main
 
       - name: Run xonsh
         shell: xonsh {0}
@@ -42,7 +42,7 @@ jobs:
         shell: xonsh {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions/setup-xonsh@main
+      - uses: xonsh/actions@main
 
       - run: |
           echo "hello from xonsh"
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: xonsh
-        uses: xonsh/actions/setup-xonsh@main
+        uses: xonsh/actions@main
         with:
           python-version: '3.13'         # actions/setup-python before install
           xonsh-version: '0.23.1'        # pinned PyPI version
@@ -117,7 +117,7 @@ jobs:
         shell: xonsh {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions/setup-xonsh@main
+      - uses: xonsh/actions@main
 
       - run: |
           $PATH.append('/mypath')
