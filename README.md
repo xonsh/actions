@@ -59,7 +59,7 @@ jobs:
 | `xonsh-version` | PyPI version spec (e.g. `0.23.1`, `>=0.23.1`). Empty installs the latest. | *(latest)* |
 | `python-version` | If set, runs [`actions/setup-python@v5`](https://github.com/actions/setup-python) with this version. | *(pre-installed Python)* |
 | `extras` | pip extras for xonsh, e.g. `full`. Installs as `xonsh[<extras>]`. | *(none)* |
-| `xontribs` | Space-separated list of extra pip packages (xontribs, etc.) installed after xonsh. | *(none)* |
+| `xontribs` | **Space-separated** list of extra pip packages (xontribs, etc.) installed after xonsh. E.g. `xontrib-abbrevs xontrib-pipeliner`. | *(none)* |
 
 ### Outputs
 
@@ -92,7 +92,7 @@ jobs:
           python-version: '3.13'         # actions/setup-python before install
           xonsh-version: '0.23.1'        # pinned PyPI version
           extras: 'full'                 # installs xonsh[full]
-          xontribs: 'xontrib-pipeliner'    # extra pip packages after xonsh
+          xontribs: 'xontrib-abbrevs xontrib-pipeliner'   # space-separated pip packages
 
       - name: Use xonsh
         run: |

@@ -19,7 +19,7 @@ inputs:
     required: false
     default: ''
   xontribs:
-    description: 'Space-separated list of extra pip packages (xontribs, etc.) to install after xonsh.'
+    description: 'Space-separated pip packages installed after xonsh. E.g. "xontrib-abbrevs xontrib-pipeliner".'
     required: false
     default: ''
 
