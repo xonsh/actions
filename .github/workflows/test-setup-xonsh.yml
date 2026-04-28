@@ -20,7 +20,7 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: ./
         id: xonsh
@@ -44,7 +44,7 @@ jobs:
   with-python-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./
         with:
           python-version: '3.13'
@@ -57,7 +57,7 @@ jobs:
   with-extras-and-xontrib:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./
         with:
           extras: 'ptk'
@@ -75,7 +75,7 @@ jobs:
       run:
         shell: 'xonsh {0}'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install xonsh
         shell: bash
         run: |
