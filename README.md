@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions@v1
+      - uses: xonsh/actions@v2
 
       - name: Run xonsh
         shell: xonsh {0}
@@ -42,7 +42,7 @@ jobs:
         shell: xonsh {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions@v1
+      - uses: xonsh/actions@v2
 
       - run: |
           echo "hello from xonsh"
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: xonsh
-        uses: xonsh/actions@v1
+        uses: xonsh/actions@v2
         with:
           python-version: '3.13'         # actions/setup-python before install
           xonsh-version: '0.23.1'        # pinned PyPI version
@@ -117,7 +117,7 @@ jobs:
         shell: xonsh {0}
     steps:
       - uses: actions/checkout@v4
-      - uses: xonsh/actions@v1
+      - uses: xonsh/actions@v2
 
       - run: |
           $PATH.append('/mypath')
